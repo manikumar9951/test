@@ -1,0 +1,27 @@
+---
+  - name: Install and configure tomcat
+    hosts: Deploy
+    gather_facts: false
+    become: yes
+    tasks:
+      - name: updating repos
+        yum:
+           name: "*"
+           state: latest
+           update_cache: true
+           use_backend: "yum"
+      - name: Downloading tomcat
+        get_url:
+          url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+          dest: /usr/local
+      - name: Extracting downloaded tomcat
+        unarchive:
+          src: /usr/local/apache-tomcat-9.0.70.tar.gz
+          dest: /usr/local
+          remote_src: yes
+      - name: war file copy to tomcat server
+        copy:
+         src: /var/lib/jenkins/workspace/Pipeline/target/HelloWorld-0.0.1-SNAPSHOT.war
+         dest: /usr/local/apache-tomcat-9.0.70/webapps
+      - name: starting tomcat
+        shell: nohup /usr/local/apache-tomcat-9.0.70/bin/startup.sh &

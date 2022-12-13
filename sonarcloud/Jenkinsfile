@@ -1,0 +1,29 @@
+pipeline{
+    agent any
+    environment {
+        PATH = "$PATH:/usr/share/apache-maven/bin"
+    }
+    
+    stages{
+        stage('scm'){
+            steps{
+                git branch: 'main', 
+                credentialsId: 'github', 
+                url: 'https://github.com/manikumar9951/manikumarpadmanabham'
+            }
+        }
+        stage('maven build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('sonar analysis'){
+            steps{
+            withSonarQubeEnv(installationName: 'sonarcube',credentialsId: 'sonarcube') {
+                sh 'mvn sonar:sonar -Dsonar.organization=manikumar9951 -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=manikumar9951_manikumarpadmanabham -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=300 -Djava.awt.headless=true'
+                
+            }
+            }
+        }
+    }
+}

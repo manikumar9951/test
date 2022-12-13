@@ -1,0 +1,32 @@
+pipeline{
+    agent {label 'master'}
+    stages{
+        stage('Checkout from github'){
+            steps{
+                git branch: 'main', 
+                credentialsId: 'github', 
+                url: 'https://github.com/manikumar9951/manikumarpadmanabham'
+            }
+        }
+        stage('Maven-Build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('sonar analysis'){
+            steps{
+            withSonarQubeEnv(installationName: 'sonarcube',credentialsId: 'sonarcube') {
+                sh 'mvn sonar:sonar -Dsonar.organization=manikumar9951 -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=manikumar9951_manikumarpadmanabham '
+                
+            }
+          }
+        }
+        stage('Apache-Deploy'){
+            steps{
+               ansiblePlaybook credentialsId: 'ec2-user', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'Inventory', playbook: 'apache-deploy.yml'
+            }
+        }
+        
+    }
+}
+

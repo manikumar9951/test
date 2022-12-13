@@ -1,0 +1,26 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('scm'){
+            steps{
+                git branch: 'main', 
+                credentialsId: 'github', 
+                url: 'https://github.com/manikumar9951/manikumarpadmanabham'
+            }
+        }
+        stage('maven build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('Deploy to tomcat'){
+            steps{
+                sshagent(['deploy_user']) {
+                sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/pipeline/target/HelloWorld-0.0.1-SNAPSHOT.war ec2-user@35.90.223.80:/usr/local/tomcat9/webapps"
+              }
+            }
+        }
+       
+    }
+}
