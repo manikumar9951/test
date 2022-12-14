@@ -1,0 +1,37 @@
+pipeline{
+    agent {label 'ansible'}
+    environment{
+        registory="513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container"
+    }
+    stages{
+        stage('Checkout from github'){
+            steps{
+                git branch: 'main', 
+                credentialsId: 'github', 
+                url: 'https://github.com/manikumar9951/test'
+            }
+        }
+        stage('Maven-Build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('Docker-Build'){
+            steps{
+                sh 'docker build -t dockerfile:latest .'
+            }
+        }
+        stage('Push image to ECR'){
+            steps{
+                script{
+                    sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 513704694763.dkr.ecr.us-west-2.amazonaws.com'
+                    sh 'docker tag dockerfile:latest 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest'
+                    sh 'docker push 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest'
+                    
+                    
+                }
+            }
+        }
+        
+  }
+}
