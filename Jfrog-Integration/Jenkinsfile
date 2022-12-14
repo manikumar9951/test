@@ -4,12 +4,8 @@ pipeline{
         PATH = "$PATH:/usr/share/apache-maven/bin"
     }
     parameters {
-        //choice(name: 'BRANCH_TO_BUILD', choices: ['hari-Jenkins', 'main'], description: 'Branch to build')
-       // string(name: 'SCM_URL', defaultValue: 'https://github.com/hariprasad291/spring-petclinic.git', description: 'SCM URL for source code')
-        //string(name: 'MAVEN_GOAL', defaultValue: "mvn package sonar:sonar", description: 'Maven goal for building')
         string(name: 'RELEASE_REPO', defaultValue: "libs-release", description: 'Repo for releses')
         string(name: 'SNAPSHOT_REPO', defaultValue: "libs-snapshot", description: 'Repo for snapshot releses')
-        //choice(name: 'PLAYBOOK', choices: ['playbook.yml', 'playbook_kubernetes.yml'], description: 'Playbook to deploy application on specified environments')
         
     }
     stages{
