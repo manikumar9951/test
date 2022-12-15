@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy
+  namespace: default
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec: 
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: hello-pod
+        image: 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
