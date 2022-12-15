@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 1
       containers:
       - name: hello-pod
-        image: 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest
+        image: 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest2
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
