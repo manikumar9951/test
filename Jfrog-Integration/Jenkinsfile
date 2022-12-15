@@ -30,7 +30,7 @@ pipeline{
         stage('Upload artifacts to jfrog') {
             steps {
                 rtMavenRun (
-                    // Tool name from Jenkins configuration.
+                    // Tool name from Jenkins configurations.
                     tool: 'MVN_BUILD',
                     pom: 'pom.xml',
                     goals: 'install',
