@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-deploy
+  name: java-test
   namespace: default
   labels:
-    app: web
+    app: java-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      app: java-test
   template:
     metadata:
       labels:
-        app: web
+        app: java-test
     spec: 
       terminationGracePeriodSeconds: 1
       containers:
@@ -21,4 +21,4 @@ spec:
         image: 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8090
