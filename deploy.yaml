@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-test
+  name: javatest
   namespace: default
   labels:
     app: javatest
