@@ -21,4 +21,4 @@ spec:
         image: 513704694763.dkr.ecr.us-west-2.amazonaws.com/docker-container:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 9090
+        - containerPort: 8080
