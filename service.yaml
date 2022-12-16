@@ -4,11 +4,10 @@ metadata:
   name: nodeport
   namespace: default
 spec:
-  type: NodePort
+  type: Load Balancer
   ports:
   - port: 80
     targetPort: 8080
-    nodePort: :3111
     protocol: TCP
   selector:
     app: web
