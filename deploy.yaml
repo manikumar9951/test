@@ -4,16 +4,16 @@ metadata:
   name: java-test
   namespace: default
   labels:
-    app: java-test
+    app: javatest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: java-test
+      app: javatest
   template:
     metadata:
       labels:
-        app: java-test
+        app: javatest
     spec: 
       terminationGracePeriodSeconds: 1
       containers:
